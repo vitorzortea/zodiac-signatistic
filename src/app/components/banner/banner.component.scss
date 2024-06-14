@@ -1,0 +1,32 @@
+:host{
+    background: url(../../../assets/img/estrelas.png), radial-gradient(111.94% 175.73% at 4.4% 104.06%, #670053 0%, #326B9D 74%, #51B3BA 100%);
+    background-size: 200%, 100%;
+    position: relative;
+    overflow: hidden;
+
+    #map-sing{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 100%;
+        transform: scale(1.6);
+        filter: drop-shadow(2px 4px 6px black);
+        mix-blend-mode: overlay;
+    }
+    #mark-star{
+        position: absolute;
+        top: calc(5% - 10px);
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 30px;
+        
+        filter: drop-shadow(2px 4px 6px black);
+        mix-blend-mode: overlay;
+    }
+}
+@media screen and (max-width: 700px) {
+    :host{
+        #map-sing{ width: 100%; height: 200%; transform: none; }
+        #mark-star{ display: none; }
+    }
+}

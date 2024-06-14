@@ -1,0 +1,1 @@
+export type CheckBox = {id:number, label:string, value:boolean};

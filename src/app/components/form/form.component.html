@@ -1,0 +1,71 @@
+<form [formGroup]="form">
+    <div>
+        <span>Eu</span>
+        <div>
+            <label [ngClass]="{
+                '-has-value': form.value.data,
+                'error': form.get('data')?.invalid && form.get('data')?.touched
+            }" >
+                <span>Nascimento</span>
+                <input
+                    [max]="hojeString"
+                    min="1950-01-01"
+                    (change)="habilitarGrupodeIdade()"
+                    onkeydown="return false"
+                    formControlName="data"
+                    type="date"
+                    placeholder=" "
+                />
+            </label>
+            <p *ngIf="form.get('data')?.touched && form.get('data')?.invalid">Data de nascimento obrigatório</p>
+        </div>
+        <span>Quem eu busco</span>
+        <div>
+            <label [ngClass]="{'-has-value': form.value.idade, 'disabled-value': form.get('idade')?.disabled}" >
+                <input formControlName="idade" type="checkbox" name="Em meu grupo de idade" />
+                <span>Em meu grupo de idade</span>
+            </label>
+        </div>
+        <div>
+            <label [ngClass]="{'-has-value': form.value.genero}" >
+                <span>Gênero</span>
+                <select formControlName="genero" name="Gênero">
+                    <option [value]="'total'">Todos</option>
+                    <option value="males">Masculino</option>
+                    <option value="females">Feminino</option>
+                </select>
+            </label>
+        </div>
+        <span>Onde eu busco</span>
+        <label [ngClass]="{'-has-value': form.value.uf || estado.length}" >
+            <span>Estado</span>
+            <select formControlName="uf" (change)="mudarEstado()" name="Estado">
+                <ng-container *ngFor="let item of estado">
+                    <option [value]="[item.id,item.nome]">{{item?.nome}}</option>
+                </ng-container>
+            </select>
+        </label>
+        <label [ngClass]="{'-has-value': form.value.cidade  || cidade.length, 'disabled-value': form.get('cidade')?.disabled}" >
+            <span>Cidade</span>
+            <select formControlName="cidade" name="Cidade">
+                <ng-container *ngFor="let item of cidade">
+                    <option [value]="[item.id,item.nome]">{{item?.nome}}</option>
+                </ng-container>
+            </select>
+        </label>
+    </div>
+    <div id="qualidades" [ngClass]="{'error': this.form.get('qualidades')?.invalid && this.form.get('qualidades')?.touched}">
+        <div>
+            <span>Deve ter essas <strong>3</strong> qualidades:</span>
+            <div>
+                <ng-container *ngFor="let item of form.value.qualidades; let i=index">
+                    <label [ngClass]="{'-has-value': form.value.qualidades}" >
+                        <input type="checkbox" [name]="item.label" [checked]="item.value" (change)="clicarQualidade(i)" />
+                        <span>{{item.label}}</span>
+                    </label>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <button (click)="submit()">Pesquisar Combinação</button>
+</form>
